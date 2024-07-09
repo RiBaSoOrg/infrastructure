@@ -115,7 +115,39 @@ services:
       - checkout_postgres
       - rabbitmq
 
+  user_postgres:
+    image: postgres:13
+    container_name: user_postgres
+    environment:
+      POSTGRES_DB: userservice
+      POSTGRES_USER: yourusername
+      POSTGRES_PASSWORD: yourpassword
+    ports:
+      - "5436:5432" # Unique port for the userservice database
+    volumes:
+      - user_postgres_data:/var/lib/postgresql/data
+
+  userservice:
+    image: ribaso/userservice:latest
+    container_name: userservice
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user_postgres:5432/userservice
+      SPRING_DATASOURCE_USERNAME: yourusername
+      SPRING_DATASOURCE_PASSWORD: yourpassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    depends_on:
+      - user_postgres
+      - rabbitmq
+
 volumes:
   book_postgres_data:
   basket_postgres_data:
   checkout_postgres_data:
+  user_postgres_data:
