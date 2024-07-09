@@ -84,6 +84,38 @@ services:
       - book_postgres
       - basket_postgres
 
+  checkout_postgres:
+    image: postgres:13
+    container_name: checkout_postgres
+    environment:
+      POSTGRES_DB: checkoutservice
+      POSTGRES_USER: yourusername
+      POSTGRES_PASSWORD: yourpassword
+    ports:
+      - "5435:5432" # Unique port for the checkoutservice database
+    volumes:
+      - checkout_postgres_data:/var/lib/postgresql/data
+
+  checkoutservice:
+    image: ribaso/checkoutservice:latest
+    container_name: checkoutservice
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://checkout_postgres:5432/checkoutservice
+      SPRING_DATASOURCE_USERNAME: yourusername
+      SPRING_DATASOURCE_PASSWORD: yourpassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    depends_on:
+      - checkout_postgres
+      - rabbitmq
+
 volumes:
   book_postgres_data:
   basket_postgres_data:
+  checkout_postgres_data:
