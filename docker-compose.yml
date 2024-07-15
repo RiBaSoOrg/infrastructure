@@ -146,8 +146,18 @@ services:
       - user_postgres
       - rabbitmq
 
+
+  bookmonkey-api:
+    image: ribaso/bookmonkey:latest  # Stellen Sie sicher, dass dies der richtige Image-Name ist
+    ports:
+      - "4730:4730"
+    volumes:
+      - bookmonkey_data:/var/lib/bookmonkey
+    restart: unless-stopped
+
 volumes:
   book_postgres_data:
   basket_postgres_data:
   checkout_postgres_data:
   user_postgres_data:
+  bookmonkey_data:
