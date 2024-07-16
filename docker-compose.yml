@@ -148,7 +148,7 @@ services:
 
 
   bookmonkey-api:
-    image: ribaso/bookmonkey:latest  # Stellen Sie sicher, dass dies der richtige Image-Name ist
+    image: ribaso/bookmonkey:latest  
     ports:
       - "4730:4730"
     volumes:
