@@ -145,6 +145,7 @@ services:
     depends_on:
       - user_postgres
       - rabbitmq
+    restart: unless-stopped
 
 
   bookmonkey-api:
