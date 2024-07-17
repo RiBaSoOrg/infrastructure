@@ -172,6 +172,17 @@ services:
     volumes:
       - keycloak_data:/var/lib/keycloak/data
 
+  frontend:
+    image: ribaso/frontend:latest
+    container_name: react-frontend
+    ports:
+      - "3000:80"
+    networks:
+      - keycloak-net
+    depends_on:
+      - userservice
+      - keycloak
+
 
 volumes:
   book_postgres_data:
