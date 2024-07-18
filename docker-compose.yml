@@ -26,7 +26,7 @@ services:
     image: ribaso/bookservice:latest
     container_name: bookservice
     ports:
-      - "8184:8080"
+      - "8084:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://book_postgres:5432/bookservice
       SPRING_DATASOURCE_USERNAME: yourusername
@@ -57,7 +57,7 @@ services:
     image: ribaso/basketservice:latest
     container_name: basketservice
     ports:
-      - "8181:8080"
+      - "8081:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://basket_postgres:5432/basketservice
       SPRING_DATASOURCE_USERNAME: yourusername
@@ -100,7 +100,7 @@ services:
     image: ribaso/checkoutservice:latest
     container_name: checkoutservice
     ports:
-      - "8182:8080"
+      - "8082:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://checkout_postgres:5432/checkoutservice
       SPRING_DATASOURCE_USERNAME: yourusername
@@ -131,7 +131,7 @@ services:
     image: ribaso/userservice:latest
     container_name: userservice
     ports:
-      - "8183:8081"
+      - "8083:8081"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://user_postgres:5432/userservice
       SPRING_DATASOURCE_USERNAME: yourusername
@@ -166,7 +166,7 @@ services:
       KC_LOG_LEVEL: info
     command: ["start-dev", "--http-port", "8080", "--import-realm", "--verbose"]
     ports:
-      - "8180:8080"
+      - "8080:8080"
     volumes:
       - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
 
